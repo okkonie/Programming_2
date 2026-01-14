@@ -1,1 +1,1 @@
-Ohjelmointi 2 -kurssin tehtäviäsa
+Ohjelmointi 2 -kurssin tehtäviä
