@@ -1,1 +1,1 @@
-Ohjelmointi 2 -kurssin tehtäviä
+Programming 2 course assignments (Java)
