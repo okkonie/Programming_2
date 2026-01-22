@@ -8,6 +8,7 @@ public class NumOfColumns {
         String[] rows = s.split("\n");  
 
         if (rows.length < 2) {return false;}
+        
         for(int i = 1; i < rows.length; i++){
             if(cols != rows[i].split(",").length){
                 return false;
