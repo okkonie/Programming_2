@@ -19,6 +19,7 @@ public class IntWrapper {
 
         IntWrapper iw1 = new IntWrapper();
         IntWrapper iw2 = new IntWrapper();
+        sc.close();
 
         int num1 = sc.nextInt();
         iw1.setVal(num1);
