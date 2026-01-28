@@ -6,6 +6,7 @@ public class IntWrapperCount {
     * Your code below this!
     */
     private int val;
+    private int count;
 
     public IntWrapperCount() {
         val = 0;
@@ -15,7 +16,7 @@ public class IntWrapperCount {
     }
 
     public getCount(){
-      return val;
+      return count;
     }
     
     /**
