@@ -9,7 +9,7 @@ public class Student {
   private String titleOfMasterThesis = ConstantValues.NO_TITLE;
   private String titleOfBachelorThesis = ConstantValues.NO_TITLE;
   private int startYear = getCurrentYear();
-  private int graduationYear;
+  private int graduationYear = 0;
   private String birthDate = ConstantValues.NO_BIRTHDATE;
 
   public Student(){
@@ -17,8 +17,12 @@ public class Student {
   }
 
   public Student(String lname, String fname){
-    this.lastName = lname;
-    this.firstName = fname;
+    if(lname != null){
+      this.lastName = lname;
+    }
+    if(fname != null){
+      this.firstName = fname;
+    }
     setId(getRandomId());
   }
 
@@ -63,7 +67,7 @@ public class Student {
   }
 
   public void setId(final int id) {
-    if(id > ConstantValues.MIN_ID && id < ConstantValues.MAX_ID){
+    if(id >= ConstantValues.MIN_ID && id <= ConstantValues.MAX_ID){
       this.id = id;
     }
   }
@@ -114,7 +118,7 @@ public class Student {
 
   public void setStartYear(final int startYear) {
     int currentYear = getCurrentYear();
-    if (startYear > 1999 && startYear <= currentYear) {
+    if (startYear > 2000 && startYear <= currentYear) {
       this.startYear = startYear;
     }
   }
@@ -137,10 +141,9 @@ public class Student {
     return "Ok";
   }
 
-  private boolean hasGraduated() {
-    return graduationYear > 0 && graduationYear < getCurrentYear();
+  public boolean hasGraduated() {
+    return graduationYear != 0 && graduationYear < getCurrentYear();
   }
-
 
   private boolean canGraduate(){
     if (
@@ -154,7 +157,7 @@ public class Student {
     return false;
   }
 
-  private int getStudyYears(){
+  public int getStudyYears(){
     if(hasGraduated()){
       return getGraduationYear() - getStartYear();
     }
@@ -250,7 +253,7 @@ public class Student {
   }
 
   public String setPersonId(final String personID){
-    if(checkPersonIdNumber(personID)){
+    if(personID != null && checkPersonIdNumber(personID)){
       String yearStart = 
         personID.charAt(6) == '+' ? "18" 
         : personID.charAt(6) == '-' ? "19" 
@@ -293,15 +296,28 @@ public class Student {
 
   private boolean checkValidCharacter(final String personID){
     String nString = personID.substring(0, 6) + personID.substring(7, 10);
-    long nLong = Long.parseLong(nString);  // use long to handle big numbers
-    int n = (int)(nLong % 1) * 31;
+    double n = Double.parseDouble(nString) / 31;
+    n -= (int)n;
+    n *= 31;
 
-    char correctChar = n < 10 ? (char)(n + '0') : (char)(n + 55);
+    int correctNum = (int)Math.round(n);
 
+    char[] chars = {
+      '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 
+      'B', 'C', 'D', 'E', 'F', 'H', 'J', 'K', 'L', 'M', 'N',
+      'P', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
+    };
+
+    char correctChar = chars[correctNum];
     return personID.charAt(10) == correctChar;
   }
 
   private boolean checkBirthDate(final String date){
+
+    if(date == null){
+      return false;
+    }
+
     String[] dates = date.split("\\.");
     int day = Integer.parseInt(dates[0]);
     int month = Integer.parseInt(dates[1]);
@@ -310,47 +326,12 @@ public class Student {
     int daysInFeb = isLeap ? 29 : 28;
     int[] daysInMonth = {31, daysInFeb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    if(
-      day <= daysInMonth[month - 1] && day > 0
-      && month > 0 && month < 13 && year > 0
-    ){
-      this.birthDate = date;
-      return true;
+    if(day < 1 || month < 1 || month > 12 || year < 1 || day > daysInMonth[month - 1]){
+      return false;
     }
+
+    this.birthDate = date;
+    return true;
     
-    return false;
-  }
-  public static void main(String[] args) {
-    Student a = new Student();
-    Student b = new Student("Mouse", "Mickey");
-    Student c = new Student("Mouse", "Minnie");
-    a.setFirstName("Donald");
-    a.setLastName("Duck");
-    a.setBachelorCredits(120);
-    a.setMasterCredits(180);
-    a.setTitleOfMasterThesis("Master thesis title");
-    a.setTitleOfBachelorThesis("Bachelor thesis title");
-    a.setStartYear(2001);
-    b.setGraduationYear(2020);
-    b.setPersonId("221199-123A");
-    b.setTitleOfBachelorThesis("A new exciting purpose of life");
-    b.setBachelorCredits(65);
-    b.setMasterCredits(22);
-    c.setPersonId("111111-3334");
-    c.setBachelorCredits(215);
-    c.setMasterCredits(120);
-    c.setTitleOfMasterThesis("Christmas - The most wonderful time of the year");
-    c.setTitleOfBachelorThesis("Dreaming of a white Christmas");
-    c.setStartYear(2018);
-    c.setGraduationYear(2022);
-
-    System.out.print(a);
-    System.out.print(b);
-    System.out.print(c);
-
-    System.out.println(a.setPersonId("This is a string"));
-    System.out.println(b.setPersonId("320187-1234"));
-    System.out.println(c.setPersonId("11111111-3334"));
-    System.out.println(a.setPersonId("121298-830A"));
   }
 }

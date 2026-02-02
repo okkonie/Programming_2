@@ -2,26 +2,22 @@ import java.util.Scanner;
 
 public class IntWrapperCount {
     
-    /**
-    * Your code below this!
-    */
+    public static int count;
     private int val;
-    private int count;
 
     public IntWrapperCount() {
         val = 0;
     }
+
     public IntWrapperCount(int ival) {
+        count += 1;
         val = ival;
     }
-
-    public getCount(){
-      return count;
+    
+    public static int getCount(){
+        return count;
     }
     
-    /**
-    * Your code above this!
-    */
     public static void main(String [] args) { 
         
         Scanner sc = new Scanner(System.in);

@@ -17,8 +17,8 @@ public class IntWrapper {
 
         Scanner sc = new Scanner(System.in);
 
-        IntWrapper iw1 = new IntWrapper();
-        IntWrapper iw2 = new IntWrapper();
+        IntWrapperCount iw1 = new IntWrapperCount();
+        IntWrapperCount iw2 = new IntWrapperCount();
         sc.close();
 
         int num1 = sc.nextInt();
@@ -29,7 +29,7 @@ public class IntWrapper {
         check(iw1, iw2, num1, num2);
     }
 
-    static void check(IntWrapper iw1, IntWrapper iw2, int n1, int n2) {
+    static void check(IntWrapperCount iw1, IntWrapperCount iw2, int n1, int n2) {
 
         boolean w1 = false, w2 = false;
         if(iw1.getVal() == n1)
