@@ -332,6 +332,5 @@ public class Student {
 
     this.birthDate = date;
     return true;
-    
   }
 }
