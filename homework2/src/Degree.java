@@ -45,6 +45,52 @@ public class Degree {
   }
 
   public double getCreditsByBase(Character base){
+    double credits = 0.0;
+
+    for(StudentCourse course : getCourses()){
+      double courseBase = course.getCourse().getCourseBase();
+
+      if(courseBase == base){
+        credits += course.getCourse().getCredits();
+      }
+    }
+
+    return credits;
+  }
+
+  public double getCreditsByType(final int courseType){
+    double credits = 0.0;
+
+    for(StudentCourse course : getCourses()){
+      int currentCourseType = course.getCourse().getCourseType();
+      
+      if(currentCourseType == courseType){
+        credits += course.getCourse().getCredits();
+      }
+    }
+
+    return credits;
+  }
+
+  public double getCredits(){
+    double credits = 0.0;
+
+    for(StudentCourse course : getCourses()){
+      credits += course.getCourse().getCredits();
+    }
+
+    return credits;
+  }
+
+  private boolean isCourseCompleted(StudentCourse c){
+    if(c != null & c.isPassed()){
+      return true;
+    }
+
+    return false;
+  }
+
+  public void printCourses(){
     
   }
 }
