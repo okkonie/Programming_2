@@ -17,7 +17,8 @@ public class Degree {
 
   public boolean addStudentCourse(StudentCourse course){
     if(count < MAX_COURSES && course != null){
-      myCourses[count + 1] = course;
+      myCourses[count] = course;
+      count++;
       return true;
     }
 
@@ -91,6 +92,40 @@ public class Degree {
   }
 
   public void printCourses(){
+    StudentCourse[] courses = getCourses();
+    for(StudentCourse course : courses){
+      System.out.println(course + "x");
+    }
+  }
+
+  public int getCount() {
+    return count;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+      "Degree [Title: \"%s\" (courses: %d)]\n\tThesis title: \"%s\"", 
+      getDegreeTitle(), getCount(), getTitleOfThesis()
+    );
+  }
+
+  public static void main(String[] args) {
     
+    Course x = new Course("a", 123, 'A', 1, 3, 50.0, true);
+    Course xx = new Course("b", 333, 'P', 1, 3, 25.0, true);
+
+    StudentCourse y = new StudentCourse(x, 2, 2021);
+    StudentCourse yy = new StudentCourse(xx, 3, 2023);
+
+    Degree z = new Degree();
+
+    z.addStudentCourse(y);
+    z.addStudentCourse(yy);
+    z.setDegreeTitle("asdasdas");
+    z.setTitleOfThesis("oasdok asdo");
+
+    System.out.println(z.getCourses().length);
+
   }
 }
