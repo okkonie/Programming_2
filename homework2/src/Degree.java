@@ -77,7 +77,9 @@ public class Degree {
     double credits = 0.0;
 
     for(StudentCourse course : getCourses()){
-      credits += course.getCourse().getCredits();
+      if(course != null){
+        credits += course.getCourse().getCredits();
+      }
     }
 
     return credits;
@@ -93,8 +95,11 @@ public class Degree {
 
   public void printCourses(){
     StudentCourse[] courses = getCourses();
+    System.out.println();
     for(StudentCourse course : courses){
-      System.out.println(course + "x");
+      if(course != null){
+        System.out.println(course);
+      }
     }
   }
 
@@ -104,10 +109,21 @@ public class Degree {
 
   @Override
   public String toString() {
-    return String.format(
+
+    String s = String.format(
       "Degree [Title: \"%s\" (courses: %d)]\n\tThesis title: \"%s\"", 
       getDegreeTitle(), getCount(), getTitleOfThesis()
     );
+
+    int count  = 0;
+
+    for(StudentCourse course : getCourses()){
+      if(course != null){
+        count++;
+        s += String.format("\n\t%d. %s", count, course.toString());
+      }
+    }
+    return s;
   }
 
   public static void main(String[] args) {
@@ -125,7 +141,7 @@ public class Degree {
     z.setDegreeTitle("asdasdas");
     z.setTitleOfThesis("oasdok asdo");
 
-    System.out.println(z.getCourses().length);
+    System.out.println(z);
 
   }
 }
