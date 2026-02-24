@@ -7,11 +7,37 @@ public class Course {
   private double credits;
   private boolean numericGrade;
 
-  public String getName() {
+  public Course(){}
+
+  public Course(
+    String name, final int code, 
+    Character courseBase, final int type, 
+    final int period, final double credits, 
+    boolean numericGrade
+  ) {
+    setName(name);
+    setCourseCode(code, courseBase);
+    setCourseType(type);
+    setPeriod(period);
+    setCredits(credits);
+    setNumericGrade(numericGrade);
+  }
+
+  public Course(Course course){
+    this.name = course.getName();
+    this.courseCode = course.getCourseCode();
+    this.courseBase = course.getCourseBase();
+    this.courseType = course.getCourseType();
+    this.period = course.getPeriod();
+    this.credits = course.getCredits();
+    this.numericGrade = course.isNumericGrade();
+  }
+
+  public String getName(){
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(String name){
     if(name != null || name != ""){
       this.name = name;
     }
@@ -37,10 +63,12 @@ public class Course {
 
   public void setCourseCode(final int courseCode, Character courseBase){
     boolean codeValid = courseCode > 0 && courseCode < 1000000;
-    boolean baseValid = courseBase == 'A' || courseBase == 'P' || courseBase == 'S';
+    Character baseUpper = Character.toUpperCase(courseBase);
+    boolean baseValid = baseUpper == 'A' || baseUpper == 'P' || baseUpper == 'S';
 
     if(codeValid && baseValid){
-      this.courseCode = Integer.toString(courseCode) + courseBase;
+      this.courseCode = Integer.toString(courseCode) + baseUpper;
+      this.courseBase = baseUpper;
     }
   }
 
@@ -62,7 +90,7 @@ public class Course {
     return credits;
   }
 
-  public void setCredits(final double credits){
+  private void setCredits(final double credits){
     if(credits <= ConstantValues.MAX_COURSE_CREDITS && credits >= ConstantValues.MIN_CREDITS){
       this.credits = credits;
     }
@@ -85,23 +113,8 @@ public class Course {
     );
   }
 
-  public Course(){}
-
-  public Course(
-    String name, final int code, 
-    Character courseBase, final int type, 
-    final int period, final double credits, 
-    boolean numericGrade
-  ) {
-    setName(name);
-    setCourseCode(code, courseBase);
-    setCourseType(type);
-    setPeriod(period);
-    setCredits(credits);
-  }
-
   public static void main(String[] args) {
-    Course x = new Course("a", 123, 'A', 1, 3, 5000.0, true);
+    Course x = new Course("a", 123, 'A', 1, 3, 50.0, true);
 
     System.out.println(x);
   }

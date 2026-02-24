@@ -1,6 +1,6 @@
 public class Degree {
   static final int MAX_COURSES = 50;
-  private int count;
+  private int count = 0;
   private String degreeTitle = ConstantValues.NO_TITLE;
   private String titleOfThesis = ConstantValues.NO_TITLE;
   private StudentCourse[] myCourses = new StudentCourse[MAX_COURSES];
@@ -40,7 +40,7 @@ public class Degree {
   }
 
   public void setTitleOfThesis(String titleOfThesis) {
-    if(degreeTitle != null){
+    if(titleOfThesis != null){
       this.titleOfThesis = titleOfThesis;
     }
   }
@@ -49,10 +49,12 @@ public class Degree {
     double credits = 0.0;
 
     for(StudentCourse course : getCourses()){
-      double courseBase = course.getCourse().getCourseBase();
+      if(course != null && isCourseCompleted(course)){
+        Character courseBase = course.getCourse().getCourseBase();
 
-      if(courseBase == base){
-        credits += course.getCourse().getCredits();
+        if(courseBase == base){
+          credits += course.getCourse().getCredits();
+        }
       }
     }
 
@@ -63,10 +65,12 @@ public class Degree {
     double credits = 0.0;
 
     for(StudentCourse course : getCourses()){
-      int currentCourseType = course.getCourse().getCourseType();
-      
-      if(currentCourseType == courseType){
-        credits += course.getCourse().getCredits();
+      if(course != null && isCourseCompleted(course)){
+        int currentCourseType = course.getCourse().getCourseType();
+        
+        if(currentCourseType == courseType){
+          credits += course.getCourse().getCredits();
+        }
       }
     }
 
@@ -77,7 +81,7 @@ public class Degree {
     double credits = 0.0;
 
     for(StudentCourse course : getCourses()){
-      if(course != null){
+      if(course != null && isCourseCompleted(course)){
         credits += course.getCourse().getCredits();
       }
     }
@@ -128,18 +132,7 @@ public class Degree {
 
   public static void main(String[] args) {
     
-    Course x = new Course("a", 123, 'A', 1, 3, 50.0, true);
-    Course xx = new Course("b", 333, 'P', 1, 3, 25.0, true);
-
-    StudentCourse y = new StudentCourse(x, 2, 2021);
-    StudentCourse yy = new StudentCourse(xx, 3, 2023);
-
     Degree z = new Degree();
-
-    z.addStudentCourse(y);
-    z.addStudentCourse(yy);
-    z.setDegreeTitle("asdasdas");
-    z.setTitleOfThesis("oasdok asdo");
 
     System.out.println(z);
 

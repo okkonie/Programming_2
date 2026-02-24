@@ -5,73 +5,6 @@ public class StudentCourse {
   private int gradeNum;
   private int yearCompleted = 0;
 
-  private int getCurrentYear(){
-    return Year.now().getValue();
-  }
-
-  public Course getCourse() {
-    return course;
-  }
-
-  public void setCourse(Course course) {
-    this.course = course;
-  }
-
-  public int getGradeNum() {
-    return gradeNum;
-  }
-
-  protected void setGrade(final int gradeNum) {
-    if(checkGradeValidity(gradeNum)){
-      this.gradeNum = gradeNum;
-      if(yearCompleted == 0){
-        this.yearCompleted = getCurrentYear();
-      }
-    }
-  }
-
-  private boolean checkGradeValidity(int gradeNum){
-    if(
-      (gradeNum >= ConstantValues.MIN_GRADE && gradeNum <= ConstantValues.MAX_GRADE)
-      || gradeNum == ConstantValues.GRADE_FAILED 
-      || gradeNum == ConstantValues.GRADE_ACCEPTED
-    ){
-      return true;
-    }
-    return false;
-  }
-
-  public boolean isPassed(){
-    int grade = getGradeNum();
-    if(grade == 0 || grade == 'F'){
-      return false;
-    }
-    return true;
-  }
-
-  public int getYear(){
-    return yearCompleted;
-  }
-
-  public void setYear(final int year){
-    int currentYear = getCurrentYear();
-
-    if(year >= 2000 && year <= currentYear){
-      this.yearCompleted = year;
-    }
-  }
-
-  @Override
-  public String toString() {
-    int grade = getGradeNum();
-    String gradeString = grade == 0 ? "\"Not graded\"" : Integer.toString(grade);
-    return String.format(
-      "[%s, (%5.2f cr), \"%s\". %s, period: %d.] Year: %d, Grade: %s.]", 
-      course.getCourseCode(), course.getCredits(), course.getName(), 
-      course.getCourseTypeString(), course.getPeriod(), getYear(), gradeString
-    );
-  }
-
   public StudentCourse(){}
 
   public StudentCourse(
@@ -83,10 +16,75 @@ public class StudentCourse {
     setYear(yearCompleted);
   }
 
-  public static void main(String[] args) {
-    Course x = new Course("a", 123, 'A', 1, 3, 5000.0, true);
+  private int getCurrentYear(){
+    return Year.now().getValue();
+  }
 
-    StudentCourse y = new StudentCourse(x, 2, 2021);
+  public Course getCourse(){
+    return course;
+  }
+
+  public void setCourse(Course course){
+    this.course = course;
+  }
+
+  public int getGradeNum(){
+    return gradeNum;
+  }
+
+  protected void setGrade(final int gradeNum){
+    int grade = course.isNumericGrade() ? gradeNum : Character.toUpperCase(gradeNum);
+
+    if(checkGradeValidity(grade)){
+      this.gradeNum = grade;
+      if(yearCompleted == 0){
+        setYear(getCurrentYear());
+      }
+    }
+  }
+
+  private boolean checkGradeValidity(int gradeNum){
+    return (
+      (gradeNum >= ConstantValues.MIN_GRADE && gradeNum <= ConstantValues.MAX_GRADE)
+      || gradeNum == ConstantValues.GRADE_FAILED
+      || gradeNum == ConstantValues.GRADE_ACCEPTED
+    );
+  }
+
+  public boolean isPassed(){
+    int grade = getGradeNum();
+    return !(grade == 0 || grade == 'F');
+  }
+
+  public int getYear(){
+    return yearCompleted;
+  }
+
+  public void setYear(final int year){
+    if(year >= 2000 && year <= getCurrentYear()){
+      this.yearCompleted = year;
+    }
+  }
+
+  @Override
+  public String toString() {
+    int grade = getGradeNum();
+    String gradeString = 
+      grade == 0 ? "\"Not graded\"" 
+      : course.isNumericGrade() ? Integer.toString(grade)
+      : Character.toString((char)grade);
+  
+    return String.format(
+      "[%s, (%5.2f cr), \"%s\". %s, period: %d.] Year: %d, Grade: %s.]", 
+      course.getCourseCode(), course.getCredits(), course.getName(), 
+      course.getCourseTypeString(), course.getPeriod(), getYear(), gradeString
+    );
+  }
+
+  public static void main(String[] args) {
+    Course x = new Course("a", 666666, 'A', 2, 3, 20.0, true);
+
+    StudentCourse y = new StudentCourse(x, 'A', 2021);
 
     System.out.println(y);
   }

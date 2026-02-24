@@ -7,12 +7,17 @@ public class Student {
   private int startYear = getCurrentYear();
   private int graduationYear;
   private int degreeCount = 3;
-  private Degree[] degrees = new Degree[3];
+  private Degree[] degrees = new Degree[degreeCount];
   private String birthDate = ConstantValues.NO_BIRTHDATE;
 
-  public Student(){}
+  public Student(){
+    for(int i = 0; i < degreeCount; i++){
+      degrees[i] = new Degree();
+    }
+  }
 
   public Student(String lname, String fname){
+    this();
     if(lname != null){
       this.lastName = lname;
     }
@@ -120,9 +125,7 @@ public class Student {
   public void printDegrees(){
     for(Degree degree : degrees){
       System.out.println();
-      if(degree != null){
-        System.out.println(degree);
-      }
+      System.out.println(degree);
     }
   }
 
@@ -240,10 +243,10 @@ public class Student {
       \tTotal credits: %.1f
       \tBachelor credits: %.1f
       \t\t%s
-      \t\tTitle of BSc Thesis: %s
+      \t\tTitle of BSc Thesis: \"%s\"
       \tMaster credits: %.1f
       \t\t%s
-      \t\tTitle of MSc Thesis: %s
+      \t\tTitle of MSc Thesis: \"%s\"
       """, 
       getId(), getFirstName(), getLastName(), 
       bd, status, getStartYear(), getCurrentYear() - getStartYear(), 

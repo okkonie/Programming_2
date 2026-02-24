@@ -2,12 +2,18 @@ import java.util.Scanner;
 
 public class AgeException {
   
+    public class NegativeAgeException extends Exception {
+        public NegativeAgeException(String message){
+            super(message);
+        }
+    }
+
     static class Person {
         
         private String name;
         private int age;
 
-        public Person(String iname, int iage) {
+        public Person(String iname, int iage) throws NegativeAgeException {
             name = iname;
             age = iage;
         }
@@ -24,17 +30,12 @@ public class AgeException {
             return age;
         }
 
-        public void setAge(int nage) {
-          if(age < 0){
-            new NegativeAgeException("Negative age not allowed");
-          }
+        public void setAge(int nage) throws NegativeAgeException {
+            if(age < 0){
+                throw new NegativeAgeException("Negative age not allowed");
+            }
             age = nage;
         }
-
-        public Exception NegativeAgeException(int age){
-            throw Exception("Negative age not allowed: ");
-        }
-
     }
     
     /**

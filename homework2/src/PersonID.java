@@ -17,7 +17,7 @@ public class PersonID {
 
     String bd = 
       personID.substring(0, 2) + "." 
-      + personID.substring(2, 4)+ "."
+      + personID.substring(2, 4) + "."
       + yearStart + personID.substring(4, 6);
 
     if(!checkBirthDate(bd)){
@@ -41,13 +41,7 @@ public class PersonID {
   }
 
   private boolean checkLeapYear(int year){
-    if(year % 400 == 0){
-      return true;
-    }
-    if(year % 100 == 0){
-      return false;
-    }
-    return year % 4 == 0;
+    return year % 400 == 0 ? true : year % 100 == 0 ? false : year % 4 == 0;
   }
 
   private boolean checkValidCharacter(final String personID){
