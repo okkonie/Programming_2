@@ -3,7 +3,7 @@ import java.time.Year;
 public class Student {
   private String firstName = ConstantValues.NO_NAME;
   private String lastName = ConstantValues.NO_NAME;
-  private int id = getRandomId();
+  private int id;
   private int startYear = getCurrentYear();
   private int graduationYear;
   private int degreeCount = 3;
@@ -11,6 +11,7 @@ public class Student {
   private String birthDate = ConstantValues.NO_BIRTHDATE;
 
   public Student(){
+    this.id = getRandomId();
     for(int i = 0; i < degreeCount; i++){
       degrees[i] = new Degree();
     }
@@ -153,7 +154,7 @@ public class Student {
   }
 
   public boolean hasGraduated() {
-    return graduationYear != 0 && graduationYear < getCurrentYear();
+    return graduationYear != 0 && graduationYear <= getCurrentYear();
   }
 
   private boolean canGraduate(){
@@ -205,6 +206,11 @@ public class Student {
     String status = hasGraduated() 
       ? String.format("The student has graduated in %d", getGraduationYear())
       : "The student has not graduated, yet";
+
+
+    String last = hasGraduated()
+      ? String.format("(Studies lasted for %d years)", getStudyYears())
+      : String.format("(Studies have lasted for %d years)", getStudyYears());
     
     double bachelorCredits = degrees[0].getCredits();
     double masterCredits = degrees[1].getCredits();
@@ -239,7 +245,7 @@ public class Student {
       \tFirst name: %s, Last name: %s
       \tDate of birth: %s
       \tStatus: %s
-      \tStart year: %d (Studies have lasted for %d years)
+      \tStart year: %d %s
       \tTotal credits: %.1f
       \tBachelor credits: %.1f
       \t\t%s
@@ -249,7 +255,7 @@ public class Student {
       \t\tTitle of MSc Thesis: \"%s\"
       """, 
       getId(), getFirstName(), getLastName(), 
-      bd, status, getStartYear(), getCurrentYear() - getStartYear(), 
+      bd, status, getStartYear(), last,
       degrees[0].getCredits() + degrees[1].getCredits(),
       degrees[0].getCredits(), bachelorCreditsStr, degrees[0].getTitleOfThesis(),
       degrees[1].getCredits(), masterCreditsStr, degrees[1].getTitleOfThesis()
@@ -258,6 +264,9 @@ public class Student {
 
   public static void main(String[] args) {
     Student x = new Student();
+
+    x.setStartYear(2008);
+    x.setGraduationYear(2012);
 
     Course one = new Course("Programming 1", 811104, 'P', 1, 1, 5.0, true);
     Course two = new Course("All kinds of basic studies", 112233, 'P', 1, 2, 45.0, true);

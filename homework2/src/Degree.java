@@ -1,5 +1,5 @@
 public class Degree {
-  static final int MAX_COURSES = 50;
+  private static final int MAX_COURSES = 50;
   private int count = 0;
   private String degreeTitle = ConstantValues.NO_TITLE;
   private String titleOfThesis = ConstantValues.NO_TITLE;
@@ -11,17 +11,19 @@ public class Degree {
 
   public void addStudentCourses(StudentCourse[] courses){
     for(StudentCourse course : courses){
-      addStudentCourse(course);
+      if(count < MAX_COURSES){
+        addStudentCourse(course);
+      }
+      break;
     }
   }
 
   public boolean addStudentCourse(StudentCourse course){
-    if(count < MAX_COURSES && course != null){
+    if(course != null){
       myCourses[count] = course;
-      count++;
+      this.count++;
       return true;
     }
-
     return false;
   }
 
@@ -90,21 +92,18 @@ public class Degree {
   }
 
   private boolean isCourseCompleted(StudentCourse c){
-    if(c != null & c.isPassed()){
-      return true;
-    }
-
-    return false;
+    return c != null && c.isPassed();
   }
 
   public void printCourses(){
     StudentCourse[] courses = getCourses();
-    System.out.println();
+    System.out.print("[");
     for(StudentCourse course : courses){
       if(course != null){
         System.out.println(course);
       }
     }
+    System.out.print("]");
   }
 
   public int getCount() {
@@ -115,7 +114,7 @@ public class Degree {
   public String toString() {
 
     String s = String.format(
-      "Degree [Title: \"%s\" (courses: %d)]\n\tThesis title: \"%s\"", 
+      "Degree [Title: \"%s\" (courses: %d)\n\tThesis title: \"%s\"", 
       getDegreeTitle(), getCount(), getTitleOfThesis()
     );
 
@@ -127,14 +126,16 @@ public class Degree {
         s += String.format("\n\t%d. %s", count, course.toString());
       }
     }
+
+    s+= "]";
+    
     return s;
   }
 
   public static void main(String[] args) {
     
     Degree z = new Degree();
-
-    System.out.println(z);
+    z.printCourses();
 
   }
 }

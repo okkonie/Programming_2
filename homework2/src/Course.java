@@ -38,7 +38,7 @@ public class Course {
   }
 
   public void setName(String name){
-    if(name != null || name != ""){
+    if(name != null && name != ""){
       this.name = name;
     }
   }
@@ -107,14 +107,14 @@ public class Course {
   @Override
   public String toString() {
     return String.format(
-      "[%s, (%5.2f cr),\"%s\". %s, period: %d.]", 
+      "[%s (%5.2f cr), \"%s\". %s, period: %d.]", 
       getCourseCode(), getCredits(), getName(), 
       getCourseTypeString(), getPeriod()
     );
   }
 
   public static void main(String[] args) {
-    Course x = new Course("a", 123, 'A', 1, 3, 50.0, true);
+    Course x = new Course( "jdeydqelwd", 272533, 'S', 1, 5, 5.0, true );
 
     System.out.println(x);
   }
