@@ -45,7 +45,7 @@ public class StudentCourse {
     if(getCourse().isNumericGrade()){
       return (gradeNum >= ConstantValues.MIN_GRADE && gradeNum <= ConstantValues.MAX_GRADE);
     } else {
-      return (gradeNum == ConstantValues.GRADE_FAILED || gradeNum == ConstantValues.GRADE_ACCEPTED);
+      return (Character.toUpperCase(gradeNum) == ConstantValues.GRADE_FAILED || Character.toUpperCase(gradeNum) == ConstantValues.GRADE_ACCEPTED);
     }
   }
 
@@ -54,7 +54,7 @@ public class StudentCourse {
     if(course.isNumericGrade()){
       return grade != 0;
     }
-    return grade != 'F' && grade != 'f';
+    return Character.toUpperCase(grade) != 'F';
   }
 
   public int getYear(){
@@ -76,17 +76,9 @@ public class StudentCourse {
       : Character.toString((char)grade);
   
     return String.format(
-      "[%s, (%5.2f cr), \"%s\". %s, period: %d.] Year: %d, Grade: %s.]", 
+      "[%s (%5.2f cr), \"%s\". %s, period: %d.] Year: %d, Grade: %s.]", 
       course.getCourseCode(), course.getCredits(), course.getName(), 
       course.getCourseTypeString(), course.getPeriod(), getYear(), gradeString
     );
-  }
-
-  public static void main(String[] args) {
-    Course x = new Course("a", 666666, 'A', 2, 3, 20.0, true);
-
-    StudentCourse y = new StudentCourse(x, 'A', 2021);
-
-    System.out.println(y);
   }
 }

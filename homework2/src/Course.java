@@ -112,11 +112,4 @@ public class Course {
       getCourseTypeString(), getPeriod()
     );
   }
-
-  public static void main(String[] args) {
-    Course x = new Course( "jdeydqelwd", 272533, 'S', 1, 5, 5.0, true );
-
-    System.out.println(x);
-  }
-
 }

@@ -11,16 +11,13 @@ public class Degree {
 
   public void addStudentCourses(StudentCourse[] courses){
     for(StudentCourse course : courses){
-      if(count < MAX_COURSES){
-        addStudentCourse(course);
-      }
-      break;
+      addStudentCourse(course);
     }
   }
 
   public boolean addStudentCourse(StudentCourse course){
-    if(course != null){
-      myCourses[count] = course;
+    if(course != null && count < MAX_COURSES){
+      myCourses[this.count] = course;
       this.count++;
       return true;
     }
@@ -130,12 +127,5 @@ public class Degree {
     s+= "]";
     
     return s;
-  }
-
-  public static void main(String[] args) {
-    
-    Degree z = new Degree();
-    z.printCourses();
-
   }
 }
